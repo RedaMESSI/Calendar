@@ -31,19 +31,23 @@
         <v-card-title class="text-h5 grey lighten-2" >
           Create event
         </v-card-title>
-        <v-text-field placeholder="Title"></v-text-field>
-        <v-text-field placeholder="Start"></v-text-field>
-        <v-text-field placeholder="End"></v-text-field>
+        <v-text-field placeholder="Title"  v-model="title" :items="title"></v-text-field>
+        <v-text-field placeholder="Start"  v-model="start" :items="start"></v-text-field>
+        <v-text-field placeholder="End"    v-model="end" :items="end"></v-text-field>
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
+          
           <v-btn
+          
             color="primary"
             text
-            @click="addEvent('Event Title', 'red')"
+            @click="dialog = false; addEvent()"
+            
           >
             Agree
+            
           </v-btn>
           <v-btn
             color="secondary"
@@ -131,9 +135,11 @@
           color="primary"
           :event-color="getEventColor"
           :type="type"
+          :events="events"
           @click:event="showEvent"
           @click:more="viewDay"
           @click:date="viewDay"
+          @change="addEvent"
         ></v-calendar>
         <v-menu
           :close-on-content-click="false"
@@ -188,29 +194,35 @@
         day: 'Day',
         '4day': '4 Days',
       },
-      events: {
-        Title:"Reda",
-        Start:"2023-O1-09",
-        End:"2023-O1-10",
-        color:"red"
-        },
+      events: [],
+      title:"",
+      start:"",
+      end:"",
+      value:'',
+      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       dialog: false,
     }),
     mounted() {
       this.$refs.calendar.checkChange()
     },
     methods: {
-      // callEvent(){
-      //   this.events.push(this.events)
-      //   console.log(events)
-      // },
-      addEvent(eventTitle, eventColor) {
-      this.$refs.calendar.addEvent({
-        title: eventTitle,
-        color: eventColor
-      });
-    },
-    viewDay ({ date }) {
+      addEvent(){
+        //test pour savoir si ma fonctionne communique avec mon template
+        console.log(this.title, this.start, this.end)
+        //push de mes variable dans l'event qui est une list qui est vide
+        //et un random pour mettre aleatoirement une couleur lors de la saisie d'un event
+          this.events.push({
+            name: this.title,
+            start: new Date(this.start),
+            end: new Date (this.end),
+            color: this.colors[this.rnd(0, this.colors.length - 1)],
+            
+          })
+        },
+      rnd (a, b) {
+        return Math.floor((b - a + 1) * Math.random()) + a
+      },
+      viewDay ({ date }) {
         this.focus = date
         var timestamp = Date.now()
         this.type = 'day'
@@ -244,3 +256,9 @@
     },
   }
 </script>
+
+
+
+
+
+
