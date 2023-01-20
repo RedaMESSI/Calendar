@@ -31,6 +31,7 @@
         <v-card-title class="text-h5 grey lighten-2" >
           Create event
         </v-card-title>
+        <!--Création d'une liaison bidirectionnelle sur un élément d'entrée de formulaire avec le v-model .-->
         <v-text-field placeholder="Title"  v-model="title" :items="title"></v-text-field>
         <v-text-field placeholder="Start"  v-model="start" :items="start"></v-text-field>
         <v-text-field placeholder="End"    v-model="end" :items="end"></v-text-field>
@@ -211,12 +212,11 @@
         console.log(this.title, this.start, this.end)
         //push de mes variable dans l'event qui est une list qui est vide
         //et un random pour mettre aleatoirement une couleur lors de la saisie d'un event
-          this.events.push({
-            name: this.title,
-            start: new Date(this.start),
-            end: new Date (this.end),
-            color: this.colors[this.rnd(0, this.colors.length - 1)],
-            
+        this.events.push({
+          name: this.title,
+          start: new Date(this.start),
+          end: new Date (this.end),
+          color: this.colors[this.rnd(0, this.colors.length - 1)],
           })
         },
       rnd (a, b) {
