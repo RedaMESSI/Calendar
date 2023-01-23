@@ -1,6 +1,14 @@
 <template>
+ 
   <v-row class="fill-height">
+   
+
+      <button  style="margin: 5%; margin-right: 5%;" @click="displayMessage() + beforeCreate() + created() + beforeMount() + mounted()">Clique ici</button>
+      <p  style="margin: 5%;" v-text="message"></p>  
+      <button  style="margin-right: 2%;" @click="beforeUpdate() + changeMessage() + updated()">Change message</button>
+      <button @click="destroyComponent() + beforeDestroy()">Destroy Component</button>
     <v-col>
+      
       <v-img
           :src="require('../assets/transparent.png')"
           class="my-3"
@@ -61,6 +69,7 @@
       </v-card>
     </v-dialog>
   </div>
+    
           <v-btn
             outlined
             class="mr-4"
@@ -195,6 +204,7 @@
         day: 'Day',
         '4day': '4 Days',
       },
+      message: '',
       events: [],
       title:"",
       start:"",
@@ -205,8 +215,36 @@
     }),
     mounted() {
       this.$refs.calendar.checkChange()
+
     },
     methods: {
+      displayMessage() {
+        this.message = "Hello World!"
+      },
+      beforeCreate() {
+        alert('Avant la création du composant')
+      },
+      created() {
+        alert('Le composant a été créé')
+      },
+      beforeMount() {
+        alert('Avant le montage du composant')
+      },
+      mounted(){
+        alert('Le composant a été monté')
+      },
+      beforeUpdate() {
+        alert('Avant la mise à jour des propriétés du composant')
+      },
+      updated() {
+        alert('Les propriétés du composant ont été mises à jour')
+      },
+      beforeDestroy() {
+        console.log('Avant la destruction du composant')
+      },
+      destroyed() {
+        console.log('Le composant a été détruit')
+      },
       addEvent(){
         //test pour savoir si ma fonctionne communique avec mon template
         console.log(this.title, this.start, this.end)
@@ -253,6 +291,17 @@
         }
         nativeEvent.stopPropagation()
       },
+      changeMessage() {
+        this.message = 'Message changed'
+      },
+      beforeDestroy() {
+        this.$destroy()
+        alert("Avant la destruction du composant")
+      },
+      destroyComponent() {
+        this.$destroy()
+        alert("le composant a été détruit")
+      }
     },
   }
 </script>
