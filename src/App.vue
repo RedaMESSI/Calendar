@@ -1,7 +1,9 @@
 <template>
+  
   <v-app>
+    <v-spacer></v-spacer>
     <v-app-bar
-      app
+      
       color=#FB62CE
       dark
     >
